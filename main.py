@@ -16,9 +16,9 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
-async def root(request: Request):
+async def show_demo_page(request: Request):
   return templates.TemplateResponse("index.html", {"request": request})
 
-@app.get("/example/raw", response_class=PlainTextResponse)
-async def raw(msg: str = "Raw message from application"):
+@app.get("/log", response_class=PlainTextResponse)
+async def log_message_and_return(msg: str = "Raw message from application"):
   return log_and_return(msg)
