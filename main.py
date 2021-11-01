@@ -1,4 +1,5 @@
 import logging
+import os
 from fastapi import FastAPI,Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -7,8 +8,13 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import PlainTextResponse
 from utilities import log_and_return
 
+disable_existing_loggers_string = os.getenv('DISABLE_EXISTING_LOGGERS', 'True')
+disable_existing_loggers = True
+if disable_existing_loggers_string.lower() == "false":
+  disable_existing_loggers = False
+
 # setup loggers
-logging.config.fileConfig('logging.conf', disable_existing_loggers=True)
+logging.config.fileConfig('logging.conf', disable_existing_loggers=disable_existing_loggers)
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
