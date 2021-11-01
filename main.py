@@ -1,6 +1,6 @@
 import logging
 import os
-from fastapi import FastAPI,Request
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -25,7 +25,7 @@ logging.info("INFO: BOOTSTRAP: Started logger demo application!")
 
 @app.get("/", response_class=HTMLResponse)
 async def show_demo_page(request: Request):
-  return templates.TemplateResponse("index.html", {"request": request})
+  return templates.TemplateResponse("index.html", {"request": request, "root_path": request.scope.get("root_path")})
 
 @app.get("/log", response_class=PlainTextResponse)
 async def log_message_and_return(msg: str = "Raw message from application"):
